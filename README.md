@@ -1,9 +1,9 @@
 # vast-hashtopolis-runner
 
-> From https://github.com/Tjenaaaa/hashtopolis-hashcat-vast/tree/main forked off
-> of https://github.com/Milz0/hashtopolis-hashcat-vast
+> Based off [Thenaaaa](https://github.com/Tjenaaaa/hashtopolis-hashcat-vast/tree/main) forked off
+> of original [Milz0](https://github.com/Milz0/hashtopolis-hashcat-vast) repo.
 
-TODO:
+## TODO:
 
 * Github CI + container publish
 
