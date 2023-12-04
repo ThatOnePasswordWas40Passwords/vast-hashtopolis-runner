@@ -1,0 +1,11 @@
+name: Image build post-merge
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and publish the Docker image
+      run: make PUBLISH=y
