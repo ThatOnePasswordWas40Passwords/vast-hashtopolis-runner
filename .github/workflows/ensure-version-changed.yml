@@ -14,13 +14,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Base SHA
+        id: base-sha
+        run: echo "sha=$(git rev-parse origin/main)" >> $GITHUB_OUTPUT
+
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
-        run: |
-          git diff --name-only ${{ github.event.after }} ${{ github.event.before }}
+        uses: tj-actions/changed-files@v40
+        with:
+          base_sha: "${{ steps.base-sha.outputs.sha }}"
+          files_yaml: |
+            version:
+              - VERSION
 
-          git fetch origin main:main
-          if [[ "$(git diff --name-only main..${GITHUB_HEAD_REF})" != *"VERSION"* ]]; then
-            echo "=> ERR: Ensure VERSION file has been bumped."
-            exit 1
-          fi
+      - name: Fail if VERSION file wasn't detected as changed
+        if: steps.changed-version-file.outputs.version_any_changed == 'false'
+        run: |
+          echo "=> Did not detect VERISON file has been updated."
+          echo "=> Updated the VERSION file, commit, and re-push."
+          exit 1
