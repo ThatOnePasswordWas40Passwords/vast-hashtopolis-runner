@@ -14,12 +14,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup main branch locally without switching current branch
-        run: git fetch origin main:main
-
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
         run: |
+          git fetch origin main:main
           if [[ "$(git diff --name-only "origin/main..${GITHUB_HEAD_REF}")" != *"VERSION"* ]]; then
             echo "=> ERR: Ensure VERSION file has been bumped."
             exit 1
