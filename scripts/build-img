@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+check-os(){
+    os=$(uname -m)
+    if [[ "${os}" != "x86_64" ]]; then
+        echo "buildx build --platform linux/amd64"
+    else
+        echo "build"
+    fi
+}
+
+is_verbose(){
+    if [[ "${VERBOSE-}" == "y" ]]; then
+        echo "--progress plain"
+    fi
+}
+
+build_img(){
+    local build_type
+    build_type="$(check-os)"
+
+    echo "=> Making: ${DOCKER_IMAGE}"
+    docker ${build_type} $(is_verbose) ${EXTRA_DOCKER_ARGS-} -t ${DOCKER_IMAGE} .
+}
+
+maybe_publish(){
+    if [[ "${PUBLISH-}" == "y" ]]; then
+        echo "=> Detected PUBLISH=y, pushing built image to ${DOCKER_REPO}"
+        docker push ${DOCKER_IMAGE}
+    else
+        echo "=> Did not detect PUBLISH=y, not publishing..."
+    fi
+}
+
+main() {
+    build_img
+    maybe_publish
+}
+
+main

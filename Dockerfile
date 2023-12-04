@@ -1,3 +1,5 @@
+# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
+#  - see: "LATEST CUDA XXXX"
 FROM nvidia/cuda:12.3.0-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=NONINTERACTIVE
