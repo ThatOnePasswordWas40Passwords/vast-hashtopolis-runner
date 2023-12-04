@@ -17,9 +17,9 @@ jobs:
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
         run: |
-          local source_branch=${GITHUB_REF##*/}
-          local target_branch=$(git merge-base $(git rev-parse --abbrev-ref origin/HEAD) ${source_branch})
-          local modified_files=$(git diff --name-only ${target_branch}..${source_branch})
+          source_branch=${GITHUB_REF##*/}
+          target_branch=$(git merge-base $(git rev-parse --abbrev-ref origin/HEAD) ${source_branch})
+          modified_files=$(git diff --name-only ${target_branch}..${source_branch})
           if [[ "${modified_files}" != *"VERSION"* ]]; then
             echo "=> ERR: Ensure VERSION file has been bumped."
             exit 1
