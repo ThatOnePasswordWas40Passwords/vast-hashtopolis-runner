@@ -1,10 +1,10 @@
-LABEL org.opencontainers.image.licenses=MIT
-LABEL org.opencontainers.image.description="Up to date CUDA container built to be a one-click runnable Hashtopolis agent to use on VastAI"
-LABEL org.opencontainers.image.source=https://github.com/ThatOnePasswordWas40Passwords/vast-hashtopolis-runner
-
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda
 #  - see: "LATEST CUDA XXXX"
 FROM nvidia/cuda:12.3.0-devel-ubuntu22.04
+
+LABEL org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.description="Up to date CUDA container built to be a one-click runnable Hashtopolis agent to use on VastAI"
+LABEL org.opencontainers.image.source=https://github.com/ThatOnePasswordWas40Passwords/vast-hashtopolis-runner
 
 ENV DEBIAN_FRONTEND=NONINTERACTIVE
 
