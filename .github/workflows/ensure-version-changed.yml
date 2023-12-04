@@ -17,7 +17,7 @@ jobs:
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
         run: |
-          if [[ "$(git diff --name-only orgin/${GITHUB_BASE_REF} ${GITHUB_HEAD_REF})" != *"VERSION"* ]]; then
+          if [[ "$(git diff --name-only "origin/main..${GITHUB_HEAD_REF}")" != *"VERSION"* ]]; then
             echo "=> ERR: Ensure VERSION file has been bumped."
             exit 1
           fi
