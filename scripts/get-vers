@@ -7,11 +7,14 @@ dir=$PWD
 [[ "${1-}" != "" ]] && dir=${1}
 
 if [[ "${IMG_VERSION-}" != "" ]]; then
+    echo "=> Detected previously set IMG_VERSION" 1>&2;
     echo "${IMG_VERSION}"
 else
     if [[ "${OFFICIAL_BUILD-}" != "" ]]; then
+        echo "=> Detected OFFICIAL_BUILD, using in file VERSION" 1>&2;
         cat "${dir}/VERSION"
     else
+        echo "=> Did not detect OFFICIAL_BUILD envar, using current git sha" 1>&2;
         echo "0.0.0+$(git rev-parse --short HEAD)"
     fi
 fi
