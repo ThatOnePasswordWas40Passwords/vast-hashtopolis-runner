@@ -12,20 +12,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0
 
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
-        uses: tj-actions/changed-files@v40
-        with:
-          since_last_remote_commit: true
-          files_yaml: |
-            version:
-              - VERSION
-
-      - name: Fail if VERSION file wasn't detected as changed
-        if: steps.changed-version-file.outputs.version_any_changed == 'false'
         run: |
-          echo "=> Did not detect VERISON file has been updated."
-          echo "=> Updated the VERSION file, commit, and re-push."
-          exit 1
+          local modified_files=$(git diff --name-only $(git merge-base $(git rev-parse --abbrev-ref origin/HEAD) ${GITHUB_REF##*/)..${GITHUB_REF##*/})
+          if [[ "${modified_files}" != *"VERSION"* ]]; then
+            echo "=> ERR: Ensure VERSION file has been bumped."
+            exit 1
+          fi
+
+          ##   uses: tj-actions/changed-files@v40
+          ##   with:
+          ##     since_last_remote_commit: true
+          ##     files_yaml: |
+          ##       version:
+          ##         - VERSION
+
+
+          ## - name: Ensure VERSION file has been updated.
+          ##   id: changed-version-file
+          ##   uses: tj-actions/changed-files@v40
+          ##   with:
+          ##     since_last_remote_commit: true
+          ##     files_yaml: |
+          ##       version:
+          ##         - VERSION
+
+          ## - name: Fail if VERSION file wasn't detected as changed
+          ##   if: steps.changed-version-file.outputs.version_any_changed == 'false'
+          ##   run: |
+          ##     echo "=> Did not detect VERISON file has been updated."
+          ##     echo "=> Updated the VERSION file, commit, and re-push."
+          ##     exit 1
