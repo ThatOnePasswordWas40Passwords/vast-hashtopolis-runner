@@ -1,18 +1,20 @@
 # vast-hashtopolis-runner
 
-> Based off [Thenaaaa](https://github.com/Tjenaaaa/hashtopolis-hashcat-vast/tree/main) forked off
-> of original [Milz0](https://github.com/Milz0/hashtopolis-hashcat-vast) repo.
+> Based off
+> [Thenaaaa](https://github.com/Tjenaaaa/hashtopolis-hashcat-vast/tree/main)
+> forked off of original
+> [Milz0](https://github.com/Milz0/hashtopolis-hashcat-vast) repo.
 
 ## TODO:
 
-* Github CI + container publish
+- Github CI + container publish
 
 ## Requirements
 
-* docker cli
-* Container engine (tested with [colima](https://github.com/abiosoft/colima) on macOS)
-* GNU Make and GNU utils
-
+- docker cli
+- Container engine (tested with [colima](https://github.com/abiosoft/colima) on
+  macOS)
+- GNU Make and GNU utils
 
 ## Build
 
@@ -34,7 +36,9 @@ make VERBOSE=y EXTRA_DOCKER_ARGS="--no-cache <etc.>"
 
 ## Publish
 
-Need [access to Github Container Registry set up](#github-container-registry-setup), then:
+Need
+[access to Github Container Registry set up](#github-container-registry-setup),
+then:
 
 ```bash
 make PUBLISH=y
@@ -43,6 +47,31 @@ make PUBLISH=y
 ### Github Container Registry setup
 
 TODO
+
+## Running
+
+### Local CLI:
+
+```bash
+docker run --rm \
+    -it \
+    --platform linux/amd64 \
+    ghcr.io/thatonepasswordwas40passwords/vast-hashtopolis-runner
+```
+
+### Via Vast.ai
+
+Edit `Image & Config` and use
+`ghcr.io/thatonepasswordwas40passwords/vast-hashtopolis-runner` as your custom
+image.
+
+Your onstart-script should be written out as so in vast.ai, not before replacing
+both values `<server>` and `<voucher_id>` with your own:
+
+```bash
+cd htpclient
+python3 hashtopolis.zip --url <server> --voucher <voucher_id>
+```
 
 ---
 
@@ -115,13 +144,14 @@ be use multiple times.
 
 #### Vast.ai
 
-Edit `Image & Config` and use `milz0/hashtopolis-hashcat-vast` as your custom
+Edit `Image & Config` and use
+`ghcr.io/thatonepasswordwas40passwords/vast-hashtopolis-runner` as your custom
 image
 
 Your onstart-script should be written out as so in vast.ai, not before replacing
-both values {server} and {voucher_id} with your own.
+both values `{server}` and `{voucher_id}` with your own:
 
-```
+```bash
 cd htpclient
 python3 hashtopolis.zip --url {server} --voucher {voucher_id}
 ```
