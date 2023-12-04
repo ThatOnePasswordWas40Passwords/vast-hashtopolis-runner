@@ -17,34 +17,7 @@ jobs:
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
         run: |
-          source_branch=${GITHUB_REF##*/}
-          target_branch=$(git merge-base $(git rev-parse --abbrev-ref origin/HEAD) ${source_branch})
-          modified_files=$(git diff --name-only ${target_branch}..${source_branch})
-          if [[ "${modified_files}" != *"VERSION"* ]]; then
+          if [[ "$(git diff --name-only orgin/${GITHUB_BASE_REF} ${GITHUB_HEAD_REF})" != *"VERSION"* ]]; then
             echo "=> ERR: Ensure VERSION file has been bumped."
             exit 1
           fi
-
-          ##   uses: tj-actions/changed-files@v40
-          ##   with:
-          ##     since_last_remote_commit: true
-          ##     files_yaml: |
-          ##       version:
-          ##         - VERSION
-
-
-          ## - name: Ensure VERSION file has been updated.
-          ##   id: changed-version-file
-          ##   uses: tj-actions/changed-files@v40
-          ##   with:
-          ##     since_last_remote_commit: true
-          ##     files_yaml: |
-          ##       version:
-          ##         - VERSION
-
-          ## - name: Fail if VERSION file wasn't detected as changed
-          ##   if: steps.changed-version-file.outputs.version_any_changed == 'false'
-          ##   run: |
-          ##     echo "=> Did not detect VERISON file has been updated."
-          ##     echo "=> Updated the VERSION file, commit, and re-push."
-          ##     exit 1
