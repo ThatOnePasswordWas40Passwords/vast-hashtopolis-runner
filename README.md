@@ -7,6 +7,43 @@ TODO:
 
 * Github CI + container publish
 
+## Requirements
+
+* docker cli
+* Container engine (tested with [colima](https://github.com/abiosoft/colima) on macOS)
+* GNU Make and GNU utils
+
+
+## Build
+
+```bash
+make
+```
+
+... verbosely:
+
+```bash
+make VERBOSE=y
+```
+
+... with arbitrary docker CLI args, use envar `EXTRA_DOCKER_ARGS`:
+
+```bash
+make VERBOSE=y EXTRA_DOCKER_ARGS="--no-cache <etc.>"
+```
+
+## Publish
+
+Need [access to Github Container Registry set up](#github-container-registry-setup), then:
+
+```bash
+make PUBLISH=y
+```
+
+### Github Container Registry setup
+
+TODO
+
 ---
 
 # Hashtopolis, Hashcat v6.x.x, Vast.ai
