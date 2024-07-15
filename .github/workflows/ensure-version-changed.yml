@@ -20,7 +20,7 @@ jobs:
 
       - name: Ensure VERSION file has been updated.
         id: changed-version-file
-        uses: tj-actions/changed-files@v40
+        uses: tj-actions/changed-files@v41
         with:
           base_sha: "${{ steps.base-sha.outputs.sha }}"
           files_yaml: |
