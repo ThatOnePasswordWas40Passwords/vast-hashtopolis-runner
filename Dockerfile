@@ -13,17 +13,26 @@ RUN apt update && apt-get upgrade -y && apt install -y --no-install-recommends \
   git \
   python3 \
   python3-psutil \
+  python3-pip \
   python3-requests \
   pciutils \
+  autossh \
+  jq \
   curl && \
   rm -rf /var/lib/apt/lists/*
 
-CMD mkdir /root/htpclient
 
-WORKDIR /root/htpclient
+RUN groupadd -g 1001 hashtopolis-user && \
+    useradd -g 1001 -u 1001 -m hashtopolis-user -s /bin/bash && \
+    echo 'hashtopolis-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers && \
+    mkdir -p /home/hashtopolis-user/.ssh && \
+    chown -R hashtopolis-user:hashtopolis-user /home/hashtopolis-user/
 
-RUN git clone https://github.com/hashtopolis/agent-python.git && \
-  cd agent-python && \
-  ./build.sh && \
-  mv hashtopolis.zip ../ && \
-  cd ../ && rm -R agent-python
+USER hashtopolis-user
+WORKDIR /home/hashtopolis-user
+
+#RUN git clone https://github.com/hashtopolis/agent-python.git && \
+#  cd agent-python && \
+#  ./build.sh && \
+#  mv hashtopolis.zip ../ && \
+#  cd ../ && rm -R agent-python
